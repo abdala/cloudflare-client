@@ -1,0 +1,76 @@
+{
+  "version":"4.0",
+  "metadata":{
+    "apiVersion":"4",
+    "serviceAbbreviation":"CloudFlare",
+    "serviceFullName":"CloudFlare",
+    "protocol":"rest-json"
+  },
+  "operations":{
+    "ListZones":{
+      "name":"ListZones",
+      "http":{
+        "method":"GET",
+        "requestUri":"/client/v4/zones"
+      },
+      "output":{"shape":"ListZoneResponse"}
+    },
+    "ZonePurgeCache":{
+      "name":"ZonePurgeCache",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/client/v4/zones/{identifier}/purge_cache"
+      },
+      "input":{"shape":"ZonePurgeCacheRequest"},
+      "output":{"shape":"ZonePurgeCacheResponse"}
+    }
+  },
+  "shapes":{
+    "ZonePurgeCacheRequest":{
+      "type":"structure",
+      "required":[
+        "files"
+      ],
+      "members":{
+        "identifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "files":{"shape":"StringList"},
+        "tags":{"shape":"StringList"}
+      }
+    },
+    "ZonePurgeCacheResponse":{
+      "type":"structure",
+      "members":{
+        "success": {"shape":"Boolean"},
+        "result":{"shape":"String"}
+      }
+    },
+    "ListZoneResponse":{
+      "type":"structure",
+      "members": {
+        "success": {"shape":"Boolean"},
+        "errors": {"type":"structure"},
+        "messages": {"type":"structure"},
+        "result": {
+          "type":"list",
+          "member":{
+            "type":"structure",
+            "members":{
+              "id":{"shape":"String"},
+              "name":{"shape":"String"}
+            }
+          }
+        }
+      }
+    },
+    "StringList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "String":{"type":"string"},
+    "Boolean":{"type":"boolean"}
+  }
+}
